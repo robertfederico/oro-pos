@@ -10,12 +10,6 @@
    6. Disable alt-f4 
 -->
 
-<!-- 
-   !TODO
-   pressing enter will open a modal : label: Customers Cash
-
- -->
-
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -194,32 +188,28 @@
 
             let data = [
                {
-                  id: 0,
-                  text: 'Nescafe Classic',
-               },
-               {
                   id: 1,
                   text: 'Nescafe Classic',
                },
                {
                   id: 2,
-                  text: 'Nescafe Blend and Brew',
+                  text: 'Summit Drinking Water',
                },
                {
                   id: 3,
-                  text: 'Great Taste White',
+                  text: 'Nescafe Blend and Brew',
                },
                {
                   id: 4,
-                  text: 'Kopiko Black',
+                  text: 'Great Taste White',
                },
                {
                   id: 5,
-                  text: 'Kopiko Brown',
+                  text: 'Kopiko Black',
                },
                {
                   id: 6,
-                  text: 'Summit Drinking Water',
+                  text: 'Kopiko Brown',
                },
             ]
 
@@ -352,10 +342,13 @@
                }
                xhr = $.getJSON('products.json', function (data) {
                   $.each(data, function (i, obj) {
-                     if (obj.id == $('#products').val()) {
+                     if (obj.id == parseInt($('#products').val())) {
+                        console.log($('#products').val())
+                        console.log(obj)
+
                         $('#orders').append(
                            `<tr>
-                           <td> ${i} </td>
+                           <td> ${obj.id} </td>
                            <td> ${obj.text} </td>
                            <td> 1 </td>
                            <td> ${obj.price}.00 </td>

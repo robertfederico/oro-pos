@@ -135,18 +135,15 @@
          >
             <div class="modal-dialog">
                <div class="modal-content">
-                  <form>
+                  <form id="form" method="POST">
                      <div class="modal-header">
-                        <h5 class="modal-title">Customers Cash</h5>
+                        <h5 class="modal-title">Proceed Transaction</h5>
                         <button
                            type="button"
                            class="btn-close"
                            data-bs-dismiss="modal"
                            aria-label="Close"
                         ></button>
-                     </div>
-                     <div class="modal-body">
-                        <input type="text" class="form-control" id="cash" />
                      </div>
                      <div class="modal-footer">
                         <button
@@ -156,8 +153,12 @@
                         >
                            Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
-                           Save
+                        <button
+                           type="submit"
+                           id="submit"
+                           class="btn btn-primary"
+                        >
+                           Proceed
                         </button>
                      </div>
                   </form>
@@ -186,6 +187,7 @@
             let cashModal = document.getElementById('exampleModal')
             let editEnter = false
             let proceed = false
+            var myModal = new bootstrap.Modal(cashModal)
 
             let escKey = false
             let editMode = false
@@ -285,18 +287,22 @@
                   }
                   if (tableItems > 0) {
                      console.log('item ' + tableItems)
-                     var myModal = new bootstrap.Modal(cashModal)
                      myModal.show()
                   }
                }
             })
 
-            // $(window).keydown(function (event) {
-            //    if (event.ctrlKey && event.keyCode == 78) {
-            //       alert('Hey! Ctrl+N event captured!')
-            //       event.preventDefault()
-            //    }
-            // })
+            $('#form').submit(function (e) {
+               e.preventDefault(e)
+               myModal.hide()
+               $('.js-example-basic-single').val(0).trigger('change')
+
+               var rowCount = ordersTable.rows.length
+               for (var x = rowCount - 1; x > 0; x--) {
+                  ordersTable.deleteRow(x)
+               }
+               tableItems = 0
+            })
 
             input.addEventListener('focus', function () {
                escKey = true

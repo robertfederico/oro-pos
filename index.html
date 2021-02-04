@@ -48,6 +48,10 @@
          table tbody tr td {
             font-weight: 400;
          }
+
+         .col-md-4 .card {
+            height: 250px !important;
+         }
       </style>
    </head>
    <body>
@@ -89,10 +93,7 @@
                            <hr />
                         </div>
                         <div class="col-md-12">
-                           <table
-                              class="table table-bordered h-100"
-                              id="orders"
-                           >
+                           <table class="table table-bordered" id="orders">
                               <thead>
                                  <tr>
                                     <th scope="col">Item Id</th>
@@ -117,20 +118,20 @@
                         class="d-flex justify-content-between align-items-center"
                      >
                         <h2>Grand Total :</h2>
-                        <h3>P250.00</h3>
+                        <h3>P 250.00</h3>
                      </div>
                      <div>
                         <div
                            class="d-flex justify-content-between align-items-center border-bottom mb-2"
                         >
                            <h5 class="m-0">Cash :</h5>
-                           <p class="m-0">P500.00</p>
+                           <p class="m-0">P 500.00</p>
                         </div>
                         <div
                            class="d-flex justify-content-between align-items-center border-bottom"
                         >
                            <h5 class="m-0">Change :</h5>
-                           <p class="m-0">P250.00</p>
+                           <p class="m-0">P 250.00</p>
                         </div>
                      </div>
                   </div>
@@ -394,8 +395,8 @@
                            `<tr>
                            <td> ${obj.id} </td>
                            <td> ${obj.text} </td>
-                           <td> <input class='form-control w-25 qty input' value='1'> </td>
-                           <td> ${obj.price}.00 </td>
+                           <td class='w-25'> <input class='form-control w-50 qty input' value='1'> </td>
+                           <td> P ${obj.price}.00 </td>
                         </tr>`
                         )
                      }

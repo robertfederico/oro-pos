@@ -260,6 +260,7 @@
 
             document.addEventListener('keydown', function (event) {
                if (event.keyCode == 32) {
+                  $('.js-example-basic-single').select2('close')
                   if (tableItems > 0) {
                      myModal.show()
                      openModal = true
@@ -267,6 +268,7 @@
                   }
                }
                if (event.key == 'Escape') {
+                  $('.js-example-basic-single').select2('close')
                   if (escKey) {
                      input.disabled = true
                      input.value = ''

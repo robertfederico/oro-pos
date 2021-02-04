@@ -47,44 +47,53 @@
       <div class="container p-5">
          <div class="row">
             <div class="col-md-8">
-               <div class="row">
-                  <div class="col-md-12 mb-5">
+               <div class="card">
+                  <div class="card-body">
                      <div class="row">
-                        <div class="col-md-6 row">
-                           <div class="col-4">
-                              <label for="barcode" class="">Invoice #:</label>
-                           </div>
-                           <div class="col-8">
-                              <input
-                                 type="text"
-                                 id="barcode"
-                                 class="form-control input-controls"
-                              />
+                        <div class="col-md-12 mb-5">
+                           <div class="row">
+                              <div class="col-md-6 row">
+                                 <div class="col-4">
+                                    <label for="barcode" class=""
+                                       >Invoice #:</label
+                                    >
+                                 </div>
+                                 <div class="col-8">
+                                    <input
+                                       type="text"
+                                       id="barcode"
+                                       class="form-control input-controls"
+                                    />
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <select
+                                    class="js-example-basic-single form-select h-100 input-controls"
+                                    name="products"
+                                    id="products"
+                                 >
+                                    <option value="0">Select Item</option>
+                                 </select>
+                              </div>
                            </div>
                         </div>
-                        <div class="col-md-6">
-                           <select
-                              class="js-example-basic-single form-select h-100 input-controls"
-                              name="products"
-                              id="products"
+                        <div class="col-md-12">
+                           <table
+                              class="table table-bordered h-100"
+                              id="orders"
                            >
-                              <option value="0">Select Item</option>
-                           </select>
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Item Id</th>
+                                    <th scope="col">Item Description</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                 </tr>
+                              </thead>
+                              <tbody></tbody>
+                           </table>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-md-12">
-                     <table class="table table-bordered h-100" id="orders">
-                        <thead>
-                           <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Item Description</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Price</th>
-                           </tr>
-                        </thead>
-                        <tbody></tbody>
-                     </table>
                   </div>
                </div>
             </div>
@@ -239,6 +248,13 @@
             )
 
             document.addEventListener('keydown', function (event) {
+               if (event.metaKey && event.key == 'n') {
+                  console.log('hey')
+                  event.preventDefault()
+               }
+            })
+
+            document.addEventListener('keydown', function (event) {
                if (event.key == 'Escape') {
                   if (escKey) {
                      input.disabled = true
@@ -248,12 +264,17 @@
                   if (!editMode) {
                      if (tableItems !== 0) {
                         if (confirm('Cancel this transaction?')) {
-                           tableItems = 0
+                           $('.js-example-basic-single')
+                              .val(0)
+                              .trigger('change')
 
                            var rowCount = ordersTable.rows.length
                            for (var x = rowCount - 1; x > 0; x--) {
                               ordersTable.deleteRow(x)
                            }
+                           tableItems = 0
+
+                           console.log('item close ' + tableItems)
                         }
                      }
                   }
@@ -263,12 +284,19 @@
                      input.disabled = false
                   }
                   if (tableItems > 0) {
-                     proceed = true
+                     console.log('item ' + tableItems)
                      var myModal = new bootstrap.Modal(cashModal)
                      myModal.show()
                   }
                }
             })
+
+            // $(window).keydown(function (event) {
+            //    if (event.ctrlKey && event.keyCode == 78) {
+            //       alert('Hey! Ctrl+N event captured!')
+            //       event.preventDefault()
+            //    }
+            // })
 
             input.addEventListener('focus', function () {
                escKey = true
@@ -313,20 +341,18 @@
             var xhr
             $('#products').on('change', function () {
                tableItems++
-               console.log($(this).val())
                if (xhr) {
                   xhr.abort()
                }
-               // $('#orders').html('')
                xhr = $.getJSON('products.json', function (data) {
                   $.each(data, function (i, obj) {
                      if (obj.id == $('#products').val()) {
                         $('#orders').append(
-                           `<tr> 
+                           `<tr>
                            <td> ${i} </td>
-                           <td> ${obj.text} </td> 
-                           <td> 1 </td> 
-                           <td> ${obj.price}.00 </td> 
+                           <td> ${obj.text} </td>
+                           <td> 1 </td>
+                           <td> ${obj.price}.00 </td>
                         </tr>`
                         )
                      }

@@ -374,10 +374,8 @@
                   nextIndex = index + 1 < focusable.length ? index + 1 : index
                   focusableInputElements[nextIndex].focus()
 
-                  if ($('.js-example-basic-single').select2('close')) {
+                  if (input.disabled) {
                      $('.js-example-basic-single').select2('open')
-                  } else {
-                     $('.js-example-basic-single').select2('close')
                   }
                } else if (e.keyCode === 37) {
                   // left arrow
